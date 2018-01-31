@@ -112,6 +112,27 @@
     $1 ? $2 : $3
     """
 
+  'isNull Validation':
+    'prefix': 'is_null_validate'
+    'body': """
+    isNull(value, next) {
+      if(value.length == 0) {
+        next(`$1 column should be filled`)
+      } else {
+        next()
+      }
+    }
+    """
+
+  'Associate':
+    'prefix': 'associate_js'
+    'body': """
+    $1.associate = function (models) {
+    //.belongsTo(models.)
+    //.belongsToMany(models., {through: ''});
+    //.hasMany(models.)
+    };
+    """
 
 '.text.html':
   'Looping ejs':
@@ -150,8 +171,8 @@
         <td><%= %></td>
         <td><%= %></td>
         <td>
-          <a href="/items/edit/<%=  %>">Edit</a>
-          <a href="/items/delete/<%= %>" onclick="return confirm (`Are you sure to delete this item?`)">Delete</a>
+          <a href="//edit/<%=  %>">Edit</a>
+          <a href="//delete/<%= %>" onclick="return confirm (`Are you sure to delete this item?`)">Delete</a>
         </td>
       </tr>
       <% }) %>
