@@ -1,0 +1,191 @@
+# Your snippets
+#
+# Atom snippets allow you to enter a simple prefix in the editor and hit tab to
+# expand the prefix into a larger code block with templated values.
+#
+# You can create a new snippet in this file by typing "snip" and then hitting
+# tab.
+#
+# An example CoffeeScript snippet to expand log to console.log:
+#
+# '.source.coffee':
+#   'Console log':
+#     'prefix': 'log'
+#     'body': 'console.log $1'
+#
+# Each scope (e.g. '.source.coffee' above) can only be declared once.
+#
+# This file uses CoffeeScript Object Notation (CSON).
+# If you are unfamiliar with CSON, you can read more about it in the
+# Atom Flight Manual:
+# http://flight-manual.atom.io/using-atom/sections/basic-customization/#_cson
+
+'.source.js':
+  'Express':
+    'prefix': 'express'
+    'body': """
+    'use strict'
+
+    const express         = require('express')
+    const app             = express()
+    const bodyParser      = require('body-parser')
+
+    app.use(bodyParser.urlencoded({ extended: false }))
+    app.use(bodyParser.json())
+
+    app.set('views', './views')
+    app.set('view engine', 'ejs')
+
+    app.get('/', function (req, res) {
+      res.render('home')
+    })
+
+    app.listen(3000, console.log(`Ready.. Set.. GO!`))
+    """
+
+  'Setup':
+    'prefix': 'setup'
+    'body': """
+    const sqlite3 = require('sqlite3').verbose()
+    const db = new sqlite3.Database('database.db')
+
+    db.serialize(function() {
+      db.run(
+        `CREATE TABLE IF NOT EXISTS $2
+        (
+          id      INTEGER PRIMARY KEY AUTOINCREMENT,
+        )`, err => { err ? console.log(err) : -1 })
+
+      db.run(
+        `CREATE TABLE IF NOT EXISTS $3
+        (
+          id      INTEGER PRIMARY KEY AUTOINCREMENT,
+        )`, err => { err ? console.log(err) : -1 })
+    })
+
+    db.close()
+    """
+
+  'Req db':
+    'prefix': 'reqdb'
+    'body': """
+    const sqlite3 = require('sqlite3').verbose()
+    const db = new sqlite3.Database('database.db')
+    """
+
+  'router get':
+    'prefix': 'router_get'
+    'body': """
+    router.get('$1', (req, res) => {
+      $2
+    })
+    """
+
+  'router post':
+    'prefix': 'router_post'
+    'body': """
+    router.post('$1', (req, res) => {
+      $2
+    })
+    """
+
+  'Nested Looping':
+    'prefix': 'fornested'
+    'body': """
+    for(let i = 0; i < $1; i++) {
+      for(let j = 0; j < $2; j++) {
+        $3
+      }
+    }
+    """
+
+  'Req Router':
+    'prefix': 'reqrouter'
+    'body': """
+    const express     = require('express')
+    const router      = express.Router()
+    """
+
+  'ternary':
+    'prefix': 'if_ternary'
+    'body': """
+    $1 ? $2 : $3
+    """
+
+
+'.text.html':
+  'Looping ejs':
+    'prefix': 'loopejs'
+    'body': """
+    <% $1.forEach($2) { %>
+      $3
+    <% } %>
+    """
+
+  'ejs percent equal':
+    'prefix': 'ejs equal'
+    'body': """
+    <%= $1 %>
+    """
+
+  'ejs ':
+    'prefix': 'ejs'
+    'body': """
+    <% $1 %>
+    """
+
+  'table ejs':
+    'prefix': 'table_ejs'
+    'body': """
+    <table>
+      <tr>
+        <th></th>
+        <th></th>
+        <th></th>
+      </tr>
+
+      <% $1.forEach($2 => { %>
+      <tr>
+        <td><%= %></td>
+        <td><%= %></td>
+        <td><%= %></td>
+        <td>
+          <a href="/items/edit/<%=  %>">Edit</a>
+          <a href="/items/delete/<%= %>" onclick="return confirm (`Are you sure to delete this item?`)">Delete</a>
+        </td>
+      </tr>
+      <% }) %>
+    </table>
+    """
+
+  'form ejs':
+    'prefix': 'form_ejs'
+    'body': """
+    <form action="$1" method="post">
+      <input type="$2" name="$3" value="" placeholder="$4">
+      <input type="$5" name="$6" value="" placeholder="$7">
+      <input type="submit" name="" value="submit">
+    </form>
+    """
+
+  'select ejs':
+    'prefix': 'select_ejs'
+    'body': """
+    <select name="$1">
+      <% $2.forEach(element => { %>
+      <option value="<%= element.$3 %>"> element.$4 </option>
+      <% }) %>
+    </select>
+    """
+
+  'ol ejs':
+    'prefix': 'ol_ejs'
+    'body': """
+    <% if( $1 !== null) { %>
+    <ol>
+        <% $2.forEach(data => { %>
+          <li><%= data.$3 %></li>
+        <% }) %>
+    </ol>
+    <% } %>
+    """
