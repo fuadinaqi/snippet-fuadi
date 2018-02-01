@@ -134,6 +134,54 @@
     };
     """
 
+  'Instance Method':
+    'prefix': 'instance method'
+    'body': """
+    $1.prototype.$2 = function () {
+      $3
+    }
+    """
+
+  'before Create':
+    'prefix': 'before create'
+    'body': """
+    $1.beforeCreate((user, options) => {
+      $2
+    })
+    """
+
+  'is Unique':
+    'prefix': 'isUnique Validation'
+    'body': """
+    isUnique(value, next) {
+     $1.findAll({
+       where:
+         {
+           namaObat: this.$2.toLowerCase(),
+           id: { [sequelize.Op.ne]: this.id }
+         }
+     })
+     .then(function (result) {
+       if (result == null || result.length == 0) {
+         return next()
+       } else {
+         return next(`${result[0].$3} sudah terdaftar`)
+       }
+     })
+    }
+    """
+
+  'then':
+    'prefix': 'then promise'
+    'body': """
+    .then(($1) => {
+      $2
+    })
+    .catch(err => {
+      res.send(err)
+    })
+    """
+
 '.text.html':
   'Looping ejs':
     'prefix': 'loopejs'
